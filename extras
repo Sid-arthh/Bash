@@ -1,0 +1,6 @@
+stack_name=$(echo $instance_metadata | grep -o 'cfn-(.*)' | awk -F '"' '{print $3}')
+
+stack_name=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep -o 'DevpayProductCodes": "[^"]*' | awk -F '": "' '{print $2}')
+
+
+aws ec2 describe-instances --instance-ids <your-instance-id> | grep -A1 'Key": "aws:cloudformation:stack-name"' | grep Value | awk -F'"' '{print $4}'
