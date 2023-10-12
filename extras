@@ -4,3 +4,5 @@ stack_name=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/doc
 
 
 aws ec2 describe-instances --instance-ids <your-instance-id> | grep -A1 'Key": "aws:cloudformation:stack-name"' | grep Value | awk -F'"' '{print $4}'
+
+(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document )
