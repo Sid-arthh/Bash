@@ -6,3 +6,7 @@ stack_name=$(curl -s http://169.254.169.254/latest/dynamic/instance-identity/doc
 aws ec2 describe-instances --instance-ids <your-instance-id> | grep -A1 'Key": "aws:cloudformation:stack-name"' | grep Value | awk -F'"' '{print $4}'
 
 (curl -s http://169.254.169.254/latest/dynamic/instance-identity/document )
+
+
+# Get StackName From inside Instance
+stack_name=$(aws ec2 describe-instances --instance-ids $(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep -o 'instanceId" : "[^"]*' | awk -F ' : ' '{gsub(/[^a-zA-Z0-9-]/, "", $2); print $2}') --region ap-southeast-2 --filters "Name=tag-key,Values=aws:cloudformation:stack-name" --query 'Reservations[0].Instances[0].Tags[0].Value' --output text | awk -F '/' '{print $2}')
