@@ -10,4 +10,6 @@ aws ec2 describe-instances --instance-ids <your-instance-id> | grep -A1 'Key": "
 
 # Get StackName From inside Instance
 stack_name=$(aws ec2 describe-instances --instance-ids $(curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | grep -o 'instanceId" : "[^"]*' | awk -F ' : ' '{gsub(/[^a-zA-Z0-9-]/, "", $2); print $2}') --region ap-southeast-2 --filters "Name=tag-key,Values=aws:cloudformation:stack-name" --query 'Reservations[0].Instances[0].Tags[0].Value' --output text | awk -F '/' '{print $2}')
-aws ec2 describe-tags --filters "Name=resource-id,Values=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)" --query "Tags[?Key=='aws:cloudformation:stack-name'].Value" --output text
+aws ec2 describe-tags --filters "Name=resource-id,Values=$(curl http://169.254.169.254/latest/meta-data/instance-id)" --query "Tags[?Key=='aws:cloudformation:stack-name'].Value" --output text
+
+aws ec2 describe-tags --filters "Name=resource-id,Values=i-0f6fc8b5cef775f04" --query "Tags[?Key=='aws:cloudformation:stack-name'].Value" --output text
