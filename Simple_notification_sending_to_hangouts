@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Define the list of ports to check
+ports_to_check=(80 443)
+
+# Google Chat webhook URL
+google_chat_webhook_url="YOUR_GOOGLE_CHAT_WEBHOOK_URL"
+
+# Function to send a message to Google Chat
+send_notification() {
+    message="$1"
+    curl -X POST -H "Content-Type: application/json" -d "{\"text\":\"$message\"}" "$google_chat_webhook_url"
+}
+
+# Loop through the list of ports and check their status
+for port in "${ports_to_check[@]}"; do
+    nc -z -w 2 127.0.0.1 $port
+    if [ $? -eq 0 ]; then
+        message="✅ Port $port is up and running."
+    else
+        message="❌ Port $port is down!"
+        send_notification "$message"
+    fi
+done
