@@ -1,0 +1,26 @@
+Since you've downloaded the JDK 17 binaries and want to make it the default Java version on your system, you'll need to manually add it to the alternatives system. The update-alternatives command you've used only shows the Java versions that are already registered with it, and since JDK 17 is not listed, you'll need to add it manually.
+
+Here's how you can do it:
+
+    Install JDK 17: If you haven't already installed JDK 17, you'll need to do so. Since you've mentioned downloading the binaries, ensure they are properly extracted to a directory, for example, /opt/java/jdk-17.0.8+7.
+
+    Add JDK 17 to alternatives:
+        First, you need to create a symbolic link to the java executable in the JDK 17 directory. Assuming your JDK 17 is installed in /opt/java/jdk-17.0.8+7, you can create a symbolic link in /usr/lib/jvm like so:
+
+sudo ln -s /opt/java/jdk-17.0.8+7 /usr/lib/jvm/jdk-17
+
+    Next, add the JDK 17 to the alternatives system. You'll need to specify the path to the java executable within the JDK 17 directory:
+
+sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk-17/bin/java 1
+
+The 1 at the end is the priority of this alternative. If you have multiple Java versions, you can assign different priorities to them, and the one with the highest priority will be the default.
+
+    Configure the default Java version:
+        Now that JDK 17 is added to the alternatives system, you can configure it as the default Java version by running:
+
+sudo update-alternatives --config java
+
+    You'll be presented with a list of installed Java versions. Select the number corresponding to JDK 17 to set it as the default.
+
+    Verify the change:
+        After setting JDK 17 as the default, verify that it's now the active Java version by running:
