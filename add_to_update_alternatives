@@ -24,3 +24,6 @@ sudo update-alternatives --config java
 
     Verify the change:
         After setting JDK 17 as the default, verify that it's now the active Java version by running:
+
+
+Set the javac using  : sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk-17/bin/javac 1
