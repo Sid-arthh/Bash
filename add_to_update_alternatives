@@ -27,3 +27,50 @@ sudo update-alternatives --config java
 
 
 Set the javac using  : sudo update-alternatives --install /usr/bin/javac javac /usr/lib/jvm/jdk-17/bin/javac 1
+
+
+
+To remove the above or revert it do
+To completely remove JDK 17 from your EC2 instance and clean up the alternatives, follow these steps:
+
+1. Remove the JDK 17 Directory
+First, delete the JDK 17 installation directory:
+
+bash
+Copy code
+
+sudo rm -rf /opt/java/jdk-17.0.8+7
+sudo rm -rf /usr/lib/jvm/jdk-17
+
+2. Remove JDK 17 from update-alternatives
+Next, remove the JDK 17 entries from the alternatives system:
+
+Remove Java (Runtime) Alternative:
+
+bash
+Copy code
+
+sudo update-alternatives --remove java /usr/lib/jvm/jdk-17/bin/java
+
+Remove javac (Compiler) Alternative:
+
+bash
+Copy code
+
+sudo update-alternatives --remove javac /usr/lib/jvm/jdk-17/bin/javac
+
+3. Verify Removal
+After removing JDK 17, verify that it's no longer set as the default Java version:
+
+bash
+Copy code
+
+java -version
+
+If you have another Java version installed, this command should now show the details of that version.
+
+You can also check the available alternatives for Java:
+
+bash
+Copy code
+sudo update-alternatives --config java
