@@ -53,3 +53,19 @@ sudo systemctl enable artifactory
 
 Access JFrog Artifactory:
 Once the installation is complete and the service is running, you can access JFrog Artifactory using your browser at http://localhost:8081/artifactory. The default login credentials are admin for both the username and password. Make sure to change the password after the first login.
+
+2 . Binary Method
+
+    3  apt update -y
+    4  apt install openjdk-8-jdk -y
+    5  sudo wget https://jfrog.bintray.com/artifactory/jfrog-artifactory-oss-6.9.6.zip
+    6  apt install unzip -y
+    7  unzip -o jfrog-artifactory-oss-6.9.6.zip -d /opt/
+    8  ./bin/artifactory-oss-6.9.6
+    9  cd /opt/artifactory-oss-6.9.6
+   10  ls
+   11  cd bin
+   12  ls
+   13  .artifactory.sh start
+   14  ./artifactory.sh sta
+
